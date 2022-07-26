@@ -1,5 +1,6 @@
 const { sequelize } = require("../../config/mysql");
 const { DataTypes } = require("sequelize");
+const Inmueble = require("./inmuebles");
 
 const Propietario = sequelize.define(
   "propietarios",
@@ -16,7 +17,7 @@ const Propietario = sequelize.define(
       type: DataTypes.STRING,
     },
 
-    vivienda: {
+    viviendaId: {
       type: DataTypes.STRING,
     },
   },
@@ -25,5 +26,19 @@ const Propietario = sequelize.define(
     timestamps: true,
   }
 );
+
+Propietario.findAllData = function () {
+  // Propietario.belongsTo(Inmueble, { foreignKey: "viviendaId" });
+
+  return Propietario.findAll({ include: Inmueble });
+};
+
+Propietario.findOne = function (id) {
+  Propietario.belongsTo(Inmueble, {
+    foreignKey: "viviendaId",
+  });
+
+  return Propietario.findAll({ where: { id }, include: Inmueble });
+};
 
 module.exports = Propietario;

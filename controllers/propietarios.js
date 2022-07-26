@@ -2,7 +2,6 @@ const { matchedData } = require("express-validator");
 const { propietariosModel } = require("../models/index");
 
 //Obtener lista de base de datos
-
 const getItems = async (req, res) => {
   try {
     const user = req.user;
@@ -12,7 +11,7 @@ const getItems = async (req, res) => {
     return data;
   } catch (error) {
     console.log(error);
-    return;
+    return error;
   }
 };
 
@@ -30,4 +29,18 @@ const createItem = async (req, res) => {
   }
 };
 
-module.exports = { getItems, createItem };
+const getItem = async (req, res) => {
+  try {
+    const id = req.params.id;
+    console.log(id);
+    const data = await propietariosModel.findAll({ where: { id } });
+    res.send(data);
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+module.exports = { getItems, createItem, getItem };

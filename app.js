@@ -6,6 +6,8 @@ const morganBody = require("morgan-body");
 const { dbConnectMysql } = require("./config/mysql");
 const { IncomingWebhook } = require("@slack/webhook");
 const app = express();
+require("./routes/inmuebles");
+require("./routes/propietarios");
 
 app.use(cors());
 app.use(express.json());
@@ -35,8 +37,8 @@ const port = process.env.PORT || 3001;
 //Routes
 
 // app.use("/api", require("./routes"));
-app.use("/api/propietarios", require("./routes/propietarios"));
 app.use("/api/inmuebles", require("./routes/inmuebles"));
+app.use("/api/propietarios", require("./routes/propietarios"));
 
 app.listen(port, () => {
   console.log(`app listen in the port ${port}`);

@@ -61,20 +61,17 @@ const Inmueble = sequelize.define(
 //Modelo persoonalizado
 
 Inmueble.findAllData = function () {
-  Inmueble.belongsTo(Propietario, {
-    foreignKey: "propietarioId",
-  });
+  Inmueble.belongsTo(Propietario, { foreignKey: "propietarioId" });
 
   return Inmueble.findAll({ include: Propietario });
 };
 
 Inmueble.findOne = function (id) {
   Inmueble.belongsTo(Propietario, {
-    foreignKey: "propietario",
-    as: "propietario",
+    foreignKey: "propietarioId",
   });
 
-  return Inmueble.findAll({ where: { id }, include: "propietario" });
+  return Inmueble.findAll({ where: { id }, include: Propietario });
 };
 
 module.exports = Inmueble;

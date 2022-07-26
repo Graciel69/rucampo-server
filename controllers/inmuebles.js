@@ -33,4 +33,18 @@ const createItem = async (req, res) => {
   }
 };
 
-module.exports = { getItems, createItem };
+const getItem = async (req, res) => {
+  try {
+    const id = req.params.id;
+    console.log(id);
+    const data = await inmueblesModel.findAll({ where: { id } });
+    res.send(data);
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+module.exports = { getItems, createItem, getItem };
