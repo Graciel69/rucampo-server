@@ -8,6 +8,19 @@ const { IncomingWebhook } = require("@slack/webhook");
 const app = express();
 require("./routes/inmuebles");
 require("./routes/propietarios");
+var fs = require('fs');
+
+var options = {
+  key: fs.readFileSync('./rucampoPrivate.key'),
+  cert: fs.readFileSync('./rucampoCert.crt')
+};
+
+app.use((err, req, res, next)=>{
+  res.status(err.status || 500);
+  res.send({
+      'message': err.message
+  });
+})
 
 app.use(cors());
 app.use(express.json());
@@ -40,9 +53,9 @@ const port = process.env.PORT || 3001;
 app.use("/api/inmuebles", require("./routes/inmuebles"));
 app.use("/api/propietarios", require("./routes/propietarios"));
 
-app.listen(port, () => {
-  console.log(`app listen in the port ${port}`);
-});
+const https = require('https').createServer(options,app);
+
+https.listen(port);
 
 // dbConnect();
 dbConnectMysql();
