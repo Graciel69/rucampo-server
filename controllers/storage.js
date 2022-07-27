@@ -133,9 +133,9 @@ const uploadFile = (req,res) =>{
        fs.copyFile(filepath, newpath, function (err) {
          if (err) {console.log(err)}
          //Send a NodeJS file upload confirmation message
-         res.write('NodeJS File Upload Success!');
-         res.end();
-         res.send(file.myFile.originalFilename);
+         res.send({file:file.myFile.originalFilename});
+         /*res.write('NodeJS File Upload Success!');
+         res.end();*/
        });
       });
 
