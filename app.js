@@ -8,6 +8,7 @@ const { IncomingWebhook } = require("@slack/webhook");
 const app = express();
 require("./routes/inmuebles");
 require("./routes/propietarios");
+require("./routes/files");
 var fs = require('fs');
 
 var options = {
@@ -52,6 +53,7 @@ const port = process.env.PORT || 3001;
 // app.use("/api", require("./routes"));
 app.use("/api/inmuebles", require("./routes/inmuebles"));
 app.use("/api/propietarios", require("./routes/propietarios"));
+app.use("/api/files", require("./routes/files"));
 
 const https = require('https').createServer(options,app);
 
