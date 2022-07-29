@@ -3,11 +3,24 @@ const { inmueblesModel } = require("../models/index");
 
 //Obtener lista de base de datos
 
-const getItems = async (req, res) => {
+const getInmuebles = async (req, res) => {
   try {
     const user = req.user;
 
-    const data = await inmueblesModel.findAllData();
+    const data = await inmueblesModel.findAll({ where: { inmueble: 1 } });
+    res.send(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+const getNoticias = async (req, res) => {
+  try {
+    const user = req.user;
+
+    const data = await inmueblesModel.findAll({ where: { noticia: 1 } });
     res.send(data);
     return data;
   } catch (error) {
@@ -47,4 +60,4 @@ const getItem = async (req, res) => {
   }
 };
 
-module.exports = { getItems, createItem, getItem };
+module.exports = { getInmuebles, createItem, getItem, getNoticias };

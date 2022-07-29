@@ -1,8 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const { getItems, createItem, getItem } = require("../controllers/inmuebles");
+const {
+  getInmuebles,
+  createItem,
+  getItem,
+  getNoticias,
+} = require("../controllers/inmuebles");
 
-router.get("/", getItems);
+router.get("/noticias", getNoticias);
+
+router.get("/", getInmuebles);
 
 router.post("/", createItem);
 

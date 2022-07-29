@@ -4,7 +4,7 @@ const {storageModel} = require('../models')
 const PUBLIC_URL = process.env.PUBLIC_URL;
 const MEDIA_PATH  = `${__dirname}/../storage`;
 const handleHttpError = require('../utils/handleError')
-
+const formidable = require('formidable');
 
 //Obtener lista de base de datos
 
@@ -112,6 +112,40 @@ const deleteItem = async (req,res) =>{
 
 }
 
+const uploadFile = (req,res) =>{
+
+   try {
+
+      // console.log(req,res);
+
+      //Create an instance of the form object
+      let form = new formidable.IncomingForm();
+
+     //Process the file upload in Node
+      form.parse(req, function (error, fields, file) {
+       let filepath = file.myFile.filepath;
+       let newpath = '/var/www/vhosts/rucampo.com/server.rucampo.com/images/';
+       newpath += file.myFile.originalFilename;
+
+       console.log(newpath,filepath)
+
+       //Copy the uploaded file to a custom folder
+       fs.copyFile(filepath, newpath, function (err) {
+         if (err) {console.log(err)}
+         //Send a NodeJS file upload confirmation message
+         res.send({file:file.myFile.originalFilename});
+         /*res.write('NodeJS File Upload Success!');
+         res.end();*/
+       });
+      });
+
+
+   } catch (error) {
+
+      handleHttpError(res, "ERROR_UPLOADING_FILE")
+
+   }
+}
 
 
 
@@ -120,4 +154,4 @@ const deleteItem = async (req,res) =>{
 
 
 
-module.exports = {getItems, getItem, createItem, updateItem, deleteItem}
+module.exports = {getItems, getItem, createItem, updateItem, deleteItem, uploadFile}

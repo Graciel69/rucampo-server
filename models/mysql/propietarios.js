@@ -17,8 +17,8 @@ const Propietario = sequelize.define(
       type: DataTypes.STRING,
     },
 
-    viviendaId: {
-      type: DataTypes.STRING,
+    inmuebleId: {
+      type: DataTypes.INTEGER,
     },
   },
 
@@ -27,18 +27,18 @@ const Propietario = sequelize.define(
   }
 );
 
-Propietario.findAllData = function () {
-  // Propietario.belongsTo(Inmueble, { foreignKey: "viviendaId" });
+// Propietario.findAllData = function () {
+//   // Propietario.belongsTo(Inmueble, { foreignKey: "viviendaId" });
 
-  return Propietario.findAll({ include: Inmueble });
-};
+//   return Propietario.findAll({ include: Inmueble });
+// };
 
-Propietario.findOne = function (id) {
-  Propietario.belongsTo(Inmueble, {
-    foreignKey: "viviendaId",
-  });
+// Propietario.findOne = function (id) {
+//   Propietario.belongsTo(Inmueble, {
+//     foreignKey: "viviendaId",
+//   });
 
-  return Propietario.findAll({ where: { id }, include: Inmueble });
-};
+//   return Propietario.findAll({ where: { id }, include: Inmueble });
+// };
 
 module.exports = Propietario;

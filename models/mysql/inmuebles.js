@@ -46,6 +46,18 @@ const Inmueble = sequelize.define(
     cocina: {
       type: DataTypes.STRING,
     },
+    inmueble: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: 1,
+    },
+    noticia: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: 0,
+    },
+    encargo: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: 0,
+    },
     terraza: {
       type: DataTypes.NUMBER,
     },
@@ -60,18 +72,18 @@ const Inmueble = sequelize.define(
 
 //Modelo persoonalizado
 
-Inmueble.findAllData = function () {
-  Inmueble.belongsTo(Propietario, { foreignKey: "propietarioId" });
+// Inmueble.findAllData = function () {
+//   Inmueble.belongsTo(Propietario, { foreignKey: "propietarioId" });
 
-  return Inmueble.findAll({ include: Propietario });
-};
+//   return Inmueble.findAll({ include: Propietario });
+// };
 
-Inmueble.findOne = function (id) {
-  Inmueble.belongsTo(Propietario, {
-    foreignKey: "propietarioId",
-  });
+// Inmueble.findOne = function (id) {
+//   Inmueble.belongsTo(Propietario, {
+//     foreignKey: "propietarioId",
+//   });
 
-  return Inmueble.findAll({ where: { id }, include: Propietario });
-};
+//   return Inmueble.findAll({ where: { id }, include: Propietario });
+// };
 
 module.exports = Inmueble;

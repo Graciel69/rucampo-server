@@ -43,4 +43,43 @@ const getItem = async (req, res) => {
   }
 };
 
-module.exports = { getItems, createItem, getItem };
+const customGetItem = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const data = await propietariosModel.findAll({ where: { inmuebleId: id } });
+
+    res.send(data);
+
+    return data;
+  } catch (error) {
+    console.log(error);
+
+    return error;
+  }
+};
+
+const updateItem = async (req, res) => {
+  try {
+    const body = req.body;
+    const id = req.params.id;
+
+    const data = await propietariosModel.findOne({ where: { id } });
+
+    if (data) {
+      await data.update(body);
+
+      const newData = await propietariosModel.findOne({ where: { id } });
+
+      res.send(newData);
+    } else {
+      console.log("algo salio mal ");
+    }
+  } catch (error) {
+    console.log(error);
+
+    return error;
+  }
+};
+
+module.exports = { getItems, createItem, getItem, customGetItem, updateItem };

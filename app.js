@@ -8,6 +8,35 @@ const { IncomingWebhook } = require("@slack/webhook");
 const app = express();
 require("./routes/inmuebles");
 require("./routes/propietarios");
+require("./routes/files");
+
+var fs = require("fs");
+
+var options = {
+  key: fs.readFileSync("./rucampoPrivate.key"),
+  cert: fs.readFileSync("./rucampoCert.crt"),
+};
+
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  res.send({
+    message: err.message,
+  });
+});
+
+var fs = require("fs");
+
+var options = {
+  key: fs.readFileSync("./rucampoPrivate.key"),
+  cert: fs.readFileSync("./rucampoCert.crt"),
+};
+
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  res.send({
+    message: err.message,
+  });
+});
 
 app.use(cors());
 app.use(express.json());
@@ -37,12 +66,17 @@ const port = process.env.PORT || 3001;
 //Routes
 
 // app.use("/api", require("./routes"));
+app.use("/api/comentarios", require("./routes/comentarios"));
 app.use("/api/inmuebles", require("./routes/inmuebles"));
 app.use("/api/propietarios", require("./routes/propietarios"));
 
-app.listen(port, () => {
-  console.log(`app listen in the port ${port}`);
-});
+app.use("/api/files", require("./routes/files"));
+
+const https = require("https").createServer(options, app);
+
+// https.listen(port);
+
+app.listen(port);
 
 // dbConnect();
 dbConnectMysql();
