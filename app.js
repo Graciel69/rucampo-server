@@ -69,6 +69,7 @@ const port = process.env.PORT || 3001;
 app.use("/api/comentarios", require("./routes/comentarios"));
 app.use("/api/inmuebles", require("./routes/inmuebles"));
 app.use("/api/propietarios", require("./routes/propietarios"));
+app.use("/api/files", require("./routes/files"));
 
 app.use("/api/files", require("./routes/files"));
 
